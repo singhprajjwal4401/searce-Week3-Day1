@@ -3,8 +3,6 @@ using namespace std;
 
 int main()
 {
-    cout << "\n\nWelcome to Studytonight :-)\n\n\n";
-    cout << " =====  Program to demonstrate Deletion of an element from an Array ===== \n\n";
 
     int n;
 
