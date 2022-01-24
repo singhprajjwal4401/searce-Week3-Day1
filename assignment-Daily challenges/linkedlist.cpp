@@ -1,62 +1,81 @@
-#include <iostream>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
-//node structure
-struct Node {
-    int data;
-    Node* next;
-};
+struct node 
+{
+    int num;                        //Data of the node
+    struct node *nextptr;           //Address of the next node
+}*stnode;
 
-class LinkedList {
-  private:
-    Node* head;
-  public:
-    LinkedList(){
-      head = NULL;
-    }
- 
-    //Add new element at the end of the list
-    void push_back(int newElement) {
-      Node* newNode = new Node();
-      newNode->data = newElement;
-      newNode->next = NULL; 
-      if(head == NULL) {
-        head = newNode;
-      } else {
-        Node* temp = head;
-        while(temp->next != NULL)
-          temp = temp->next;
-        temp->next = newNode;
-      }    
-    }
+void createNodeList(int n); // function to create the list
+void displayList();         // function to display the list
 
-    //display the content of the list
-    void PrintList() {
-      Node* temp = head;
-      if(temp != NULL) {
-        cout<<"The list contains: ";
-        while(temp != NULL) {
-          cout<<temp->data<<" ";
-          temp = temp->next;
-        }
-        cout<<endl;
-      } else {
-        cout<<"The list is empty.\n";
-      }
-    }    
-};
-
-
-int main() {
-  LinkedList MyList;
-
-  //Add three elements at the end of the list.
-  MyList.push_back(100);
-  MyList.push_back(200);
-  MyList.push_back(300);
-
-  //traverse to display the content of the list.
-  MyList.PrintList();
-  
-  return 0; 
+int main()
+{
+    int n;
+    printf(" Input the number of nodes : ");
+    scanf("%d", &n);
+    createNodeList(n);
+    printf("\n Traversing the list : \n");
+    displayList();
+    return 0;
 }
+void createNodeList(int n)
+{
+    struct node *fnNode, *tmp;
+    int num, i;
+    stnode = (struct node *)malloc(sizeof(struct node));
+
+    if(stnode == NULL) //check whether the fnnode is NULL and if so no memory allocation
+    {
+        printf(" Memory can not be allocated.");
+    }
+    else
+    {
+// reads data for the node through keyboard
+
+        printf(" Input data for node 1 : ");
+        scanf("%d", &num);
+        stnode->num = num;      
+        stnode->nextptr = NULL; // links the address field to NULL
+        tmp = stnode;
+// Creating n nodes and adding to linked list
+        for(i=2; i<=n; i++)
+        {
+            fnNode = (struct node *)malloc(sizeof(struct node));
+            if(fnNode == NULL)
+            {
+                printf(" Memory can not be allocated.");
+                break;
+            }
+            else
+            {
+                printf(" Input data for node %d : ", i);
+                scanf(" %d", &num);
+ 
+                fnNode->num = num;      // links the num field of fnNode with num
+                fnNode->nextptr = NULL; // links the address field of fnNode with NULL
+ 
+                tmp->nextptr = fnNode; // links previous node i.e. tmp to the fnNode
+                tmp = tmp->nextptr; 
+            }
+        }
+    }
+}
+void displayList()
+{
+    struct node *tmp;
+    if(stnode == NULL)
+    {
+        printf(" List is empty.");
+    }
+    else
+    {
+        tmp = stnode;
+        while(tmp != NULL)
+        {
+            printf(" Data = %d\n", tmp->num);       // prints the data of current node
+            tmp = tmp->nextptr;                     // advances the position of current node
+        }
+    }
+} 
